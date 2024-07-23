@@ -1,12 +1,12 @@
-## Datastax AI stack (AWS) with a custom domain
+## Datastax AI stack (AWS) without a custom domain
 
 ## Table of contents
 
 1. [Overview](#1-overview)
 2. [Installation and Prerequisites](#2-installation-and-prerequisites)
 3. [Setup](#3-setup)
-4. [Deployment](#4---deployment)
-5. [Cleanup](#5---cleanup)
+4. [Deployment](#4-deployment)
+5. [Cleanup](#5-cleanup)
 
 ## 1. Overview
 
@@ -35,7 +35,7 @@ This example will follow the first way.
 
 ### 2.1 - Terraform installation
 
-You will, of course, need to install the Terraform CLI to use Terraform. Follow the steps below to install it, if you still need to.
+You will need to install the Terraform CLI to use Terraform. Follow the steps below to install it, if you still need to.
 
 - ✅ `2.1.a` Visit the Terraform installation page to install the Terraform CLI
 
@@ -86,7 +86,7 @@ Again, keep these secure!
 
 ### 2.4 - Setting up a Route53 public hosted zone
 
-- ✅ `2.3.a` - Visit the AWS console to create a public hosted zone for your apex domain (e.g. `aws.enterprise-ai-stack.com`).
+- ✅ `2.4.a` - Visit the AWS console to create a public hosted zone for your apex domain (e.g. `aws.enterprise-ai-stack.com`).
 
 https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/CreatingHostedZone.html
 
@@ -95,23 +95,25 @@ https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/CreatingHostedZone.htm
 > Make sure you create it in the same AWS account you plan to deploy the infrastructure to! Otherwise, you may run into errors
 > along the lines of "Cannot find Route53 hosted zone."
 
-### 2.5 - Cloning the sample project
+This apex domain will be what you use for the `dns_name` input variable later.
 
-- ✅ `2.5.a` - Clone the same project through the following git command:
+## 3. Setup
+
+### 3.1 - Cloning the sample project
+
+- ✅ `3.1.a` - Clone the same project through the following git command:
 
 ```sh
 git clone https://github.com/datastax/terraform-aws-astra-ai-stack.git
 ```
 
-- ✅ `2.5.b` - Then, find your way to the correct diectory:
+- ✅ `3.1.b` - Then, find your way to the correct diectory:
 
 ```sh
 cd terraform-aws-astra-ai-stack/examples/aws-no-custom-domain
 ```
 
-## 3. Setup
-
-### 3.1 - Set up AWS credentials
+### 3.2 - Set up AWS credentials
 
 There are quite a few valid ways to provide your credentials to the `aws` provider. You can see the 
 [AWS provider docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) for all of the valid ways to sign in.
@@ -119,11 +121,11 @@ There are quite a few valid ways to provide your credentials to the `aws` provid
 Below is a short walkthrough on how to set up a [shared credentials file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html).
 Feel free to use a different method of providing credentials, if you prefer, such as [env vars](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#environment-variables).
 
-- ✅ `3.1.a` - Create the credentials file
+- ✅ `3.2.a` - Create the credentials file
 
 On Mac/Linux/WSL, this will be `$HOME/.aws/credentials`. On windows, it'll be `"%USERPROFILE%\.aws\credentials"`
 
-- ✅ `3.1.b` - Populate the credentials file with your credentials
+- ✅ `3.2.b` - Populate the credentials file with your credentials
 
 ```ini
 [my_profile] 
@@ -134,32 +136,80 @@ region = ...
 
 You can replace `my_profile` with whatever name you want—you can use `default` for it to be automatically inferred as your primary profile.
 
-### 3.2 - Initialize Terraform
+### 3.3 - Initialize Terraform
 
-In this specific example directory, simply run `terraform init`, and wait as it downloads all of the necessary dependencies.
+- ✅ `3.3.a` - In this specific example directory, simply run `terraform init`, and wait as it downloads all of the necessary dependencies.
 
-## 4 - Deployment
+```sh
+terraform init
+```
+
+## 4. Deployment
 
 ### 4.1 - Actually deploying
 
-You can run `terraform apply -var="astra_token=<your_astra_token>"` (add `-var="aws_profile=<your_profile>"` if necessary) to list out
-all of the resources to be created, and simply type "yes" if you're happy with it, and ready to deploy. It may take a hot minute for it 
-to finish.
+- ✅ `4.1.a` - Run the following command to list out the components to be created. The `dns_name` will be the apex domain you created a hosted zone for earlier (e.g. `aws.enterprise-ai-stack.com`)
+
+```sh
+# If using default AWS profile
+terraform plan -var="astra_token=<your_astra_token>" -var="dns_name=<dns_name>"
+
+# If using non-default AWS profile
+terraform plan -var="astra_token=<your_astra_token>" -var="dns_name=<dns_name>" -var="aws_profile=<your_profile>"
+```
+
+- ✅ `4.1.b` - Once you're ready to commit to the deployment, run the following command, and type `yes` after double-checking that it all looks okay
+
+```sh
+# If using default AWS profile
+terraform apply -var="astra_token=<your_astra_token>" -var="dns_name=<dns_name>"
+
+# If using non-default AWS profile
+terraform apply -var="astra_token=<your_astra_token>" -var="dns_name=<dns_name>" -var="aws_profile=<your_profile>"
+```
+
+- ✅ `4.1.c` - Simply wait for it to finish deploying everything—it may take a hot minute!
 
 ### 4.2 - Accessing your deployments
 
-Run `terraform output datastax-ai-stack-aws` to access the output variables created by the Terraform code.
-
-The two fields of notice are `alb_dns_name` and `db_ids`.
-
-`alb_dns_name` will contain the domains to access the `langflow` and `astra-assistants` services.
-
-`db_ids` will contain the IDs of the created Astra vector DBs.
-
-## 5 - Cleanup
-
-When you're done, you can easily tear everything down with the following command: 
+- ✅ `4.2.a` - Run the following command to access the variables output from deploying the infrastructure
 
 ```sh
-terraform destroy -var="astra_token=<your_astra_token>" [-var="aws_profile=<your_profile>]
+terraform output datastax-ai-stack-aws
+```
+
+- ✅ `4.2.b` - Access Langflow
+
+In your browser, go to `langflow.<your_domain>` (e.g. `langflow.aws.enterprise-ai-stack.com`) to access Langflow.
+
+It may initially display a 503 error—give it a second to start up.
+
+Because this is being served over HTTP, you may need to apply [this](https://github.com/langflow-ai/langflow/issues/1508#issuecomment-2026470631) issue workaround (or the equivalent for your browser) if you just get a "error occured while fetching types" popup.
+
+- ✅ `4.2.c` - Access Astra Assistants API
+
+You can access the Astra Assistants API @ `assistants.<your_domain>` through your HTTP client of choice. e.g:
+
+```sh
+curl assistants.aws.enterprise-ai-stack.com/metrics
+```
+
+- ✅ `4.2.d` - Access your Astra Vector DB
+
+You can connect to your Astra DB instance through your method of choice, using `astra_vector_dbs.<db_id>.endpoint`.
+
+The [Data API clients](https://docs.datastax.com/en/astra-db-serverless/api-reference/overview.html) are heavily recommended for this.
+
+## 5. Cleanup
+
+### 5.1 - Destruction
+
+- ✅ `5.1.a` - When you're done, you can easily tear everything down with the following command:
+
+```sh
+# If using default AWS profile
+terraform destroy -var="astra_token=<your_astra_token>" -var="dns_name=<dns_name>"
+
+# If using non-default AWS profile
+terraform destroy -var="astra_token=<your_astra_token>" -var="dns_name=<dns_name>" -var="aws_profile=<your_profile>"
 ```

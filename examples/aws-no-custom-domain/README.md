@@ -5,8 +5,8 @@
 1. [Overview](#1-overview)
 2. [Installation and Prerequisites](#2-installation-and-prerequisites)
 3. [Setup](#3-setup)
-4. [Deployment](#4---deployment)
-5. [Cleanup](#5---cleanup)
+4. [Deployment](#4-deployment)
+5. [Cleanup](#5-cleanup)
 
 ## 1. Overview
 
@@ -83,23 +83,23 @@ Below is a short guide on how to obtain them, but you can find much more detail 
 
 Again, keep these secure!
 
-### 2.4 - Cloning the sample project
+## 3. Setup
 
-- ✅ `2.4.a` - Clone the same project through the following git command:
+### 3.1 - Cloning the sample project
+
+- ✅ `3.1.a` - Clone the same project through the following git command:
 
 ```sh
 git clone https://github.com/datastax/terraform-aws-astra-ai-stack.git
 ```
 
-- ✅ `2.4.b` - Then, find your way to the correct diectory:
+- ✅ `3.1.b` - Then, find your way to the correct diectory:
 
 ```sh
 cd terraform-aws-astra-ai-stack/examples/aws-no-custom-domain
 ```
 
-## 3. Setup
-
-### 3.1 - Set up AWS credentials
+### 3.2 - Set up AWS credentials
 
 There are quite a few valid ways to provide your credentials to the `aws` provider. You can see the 
 [AWS provider docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) for all of the valid ways to sign in.
@@ -107,11 +107,11 @@ There are quite a few valid ways to provide your credentials to the `aws` provid
 Below is a short walkthrough on how to set up a [shared credentials file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html).
 Feel free to use a different method of providing credentials, if you prefer, such as [env vars](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#environment-variables).
 
-- ✅ `3.1.a` - Create the credentials file
+- ✅ `3.2.a` - Create the credentials file
 
 On Mac/Linux/WSL, this will be `$HOME/.aws/credentials`. On windows, it'll be `"%USERPROFILE%\.aws\credentials"`
 
-- ✅ `3.1.b` - Populate the credentials file with your credentials
+- ✅ `3.2.b` - Populate the credentials file with your credentials
 
 ```ini
 [my_profile] 
@@ -122,15 +122,15 @@ region = ...
 
 You can replace `my_profile` with whatever name you want—you can use `default` for it to be automatically inferred as your primary profile.
 
-### 3.2 - Initialize Terraform
+### 3.3 - Initialize Terraform
 
-- ✅ `3.2.a` - In this specific example directory, simply run `terraform init`, and wait as it downloads all of the necessary dependencies.
+- ✅ `3.3.a` - In this specific example directory, simply run `terraform init`, and wait as it downloads all of the necessary dependencies.
 
 ```sh
 terraform init
 ```
 
-## 4 - Deployment
+## 4. Deployment
 
 ### 4.1 - Actually deploying
 
@@ -174,7 +174,7 @@ Because this is being served over HTTP, you may need to apply [this](https://git
 
 - ✅ `4.2.c` - Access Astra Assistants API
 
-You can access the Astra Assistants API through the URL given by the output `alb_dns_names.assistants` through your HTTP client of choice.
+You can access the Astra Assistants API through the URL given by the output `alb_dns_names.assistants` through your HTTP client of choice. e.g:
 
 ```sh
 curl datastax-assistants-alb-1234567890.some-region.elb.amazonaws.com/metrics
@@ -186,7 +186,7 @@ You can connect to your Astra DB instance through your method of choice, using `
 
 The [Data API clients](https://docs.datastax.com/en/astra-db-serverless/api-reference/overview.html) are heavily recommended for this.
 
-## 5 - Cleanup
+## 5. Cleanup
 
 ### 5.1 - Destruction
 
