@@ -97,8 +97,16 @@ https://docs.aws.amazon.com/Route53/latest/DeveloperGuide/CreatingHostedZone.htm
 
 ### 2.5 - Cloning the sample project
 
+- ✅ `2.5.a` - Clone the same project through the following git command:
+
 ```sh
-# TODO
+git clone https://github.com/datastax/terraform-aws-astra-ai-stack.git
+```
+
+- ✅ `2.5.b` - Then, find your way to the correct diectory:
+
+```sh
+cd terraform-aws-astra-ai-stack/examples/aws-no-custom-domain
 ```
 
 ## 3. Setup
