@@ -54,15 +54,15 @@ The token must have the sufficient perms to manage DBs, as shown in the steps be
 
 - ✅ `2.2.a` Connect to [https://astra.datastax.com](https://astra.datastax.com)
 
-![../../assets/astra/astra-login.png](../../assets/astra/astra-login.png)
+![../../assets/astra/login.png](../../assets/astra/login.png)
 
 - ✅ `2.2.b` Navigate to token and generate a token with `Organization Administrator` permissions and copy the token starting by `AstraCS:...`
 
-![../../assets/astra/astra-token.png](../../assets/astra/astra-token.png)
+![../../assets/astra/token.png](../../assets/astra/token.png)
 
 Keep the token secure, as you won't be able to access it again!
 
-### 2.3 - Authorizing with AWS
+### 2.3 - Obtaining AWS access keys
 
 You'll need a valid pair of AWS access keys to manage your AWS infrastructure through Terraform.
 
@@ -75,13 +75,36 @@ Below is a short guide on how to obtain them, but you can find much more detail 
 
 - ✅ `2.3.c` - For this user create a pair of keys wih `access_key` and `secret_key` as follows:
 
-![../../assets/aws/aws-keys-1.png](../../assets/aws/aws-keys-1.png)
+![../../assets/aws/keys-1.png](../../assets/aws/keys-1.png)
 
 - ✅ `2.3.d` - Setup the access for an application outside
 
-![../../assets/aws/aws-keys-2.png](../../assets/aws/aws-keys-2.png)
+![../../assets/aws/keys-2.png](../../assets/aws/keys-2.png)
 
 Again, keep these secure!
+
+### 2.4 - Set up AWS credentials
+
+There are quite a few valid ways to provide your credentials to the `aws` provider. You can see the 
+[AWS provider docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) for all of the valid ways to sign in.
+
+Below is a short walkthrough on how to set up a [shared credentials file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html).
+Feel free to use a different method of providing credentials, if you prefer, such as [env vars](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#environment-variables).
+
+- ✅ `2.4.a` - Create the credentials file
+
+On Mac/Linux/WSL, this will be `$HOME/.aws/credentials`. On windows, it'll be `"%USERPROFILE%\.aws\credentials"`
+
+- ✅ `2.4.b` - Populate the credentials file with your credentials
+
+```ini
+[my_profile] 
+aws_access_key_id = ...
+aws_secret_access_key = ...
+region = ...
+```
+
+You can replace `my_profile` with whatever name you want—you can use `default` for it to be automatically inferred as your primary profile.
 
 ## 3. Setup
 
@@ -99,32 +122,9 @@ git clone https://github.com/datastax/terraform-aws-astra-ai-stack.git
 cd terraform-aws-astra-ai-stack/examples/aws-no-custom-domain
 ```
 
-### 3.2 - Set up AWS credentials
+### 3.2 - Initialize Terraform
 
-There are quite a few valid ways to provide your credentials to the `aws` provider. You can see the 
-[AWS provider docs](https://registry.terraform.io/providers/hashicorp/aws/latest/docs) for all of the valid ways to sign in.
-
-Below is a short walkthrough on how to set up a [shared credentials file](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-files.html).
-Feel free to use a different method of providing credentials, if you prefer, such as [env vars](https://registry.terraform.io/providers/hashicorp/aws/latest/docs#environment-variables).
-
-- ✅ `3.2.a` - Create the credentials file
-
-On Mac/Linux/WSL, this will be `$HOME/.aws/credentials`. On windows, it'll be `"%USERPROFILE%\.aws\credentials"`
-
-- ✅ `3.2.b` - Populate the credentials file with your credentials
-
-```ini
-[my_profile] 
-aws_access_key_id = ...
-aws_secret_access_key = ...
-region = ...
-```
-
-You can replace `my_profile` with whatever name you want—you can use `default` for it to be automatically inferred as your primary profile.
-
-### 3.3 - Initialize Terraform
-
-- ✅ `3.3.a` - In this specific example directory, simply run `terraform init`, and wait as it downloads all of the necessary dependencies.
+- ✅ `3.2.a` - In this specific example directory, simply run `terraform init`, and wait as it downloads all of the necessary dependencies.
 
 ```sh
 terraform init
