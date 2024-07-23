@@ -2,7 +2,7 @@ output "vpc_id" {
   value = local.vpc_id
 }
 
-output "alb_dns_name" {
+output "alb_dns_names" {
   value = {
     for component, output in module.alb : component => output.dns_name
   }

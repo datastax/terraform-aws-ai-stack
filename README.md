@@ -139,16 +139,21 @@ Quickly sets up vector-enabled Astra Databases for your project.
 
 The ID of the VPC used. If created, it's the new ID; if set, it regurgitates the set ID.
 
-### `alb_dns_name` (`string`)
+### `alb_dns_names` (`map(string)`)
 
 The DNS name of the created ALB that the domains for langflow & assistants must be set to.
 
-### `db_ids` (`map(string)`)
+### `astra_vector_dbs` (`map(object)`)
 
-A map of DB IDs => DB names for all of the dbs created (from the `assistants` module and the `vector_dbs` module), e.g:
+A map of DB IDs => DB info for all of the dbs created (from the `assistants` module and the `vector_dbs` module), e.g:
 
 ```hcl
-"db_ids" = {
-  "12345678-abcd-efgh-1234-abcd1234efgh" = "assistant_api_db"
+"astra_vector_dbs" = {
+  "12345678-abcd-efgh-1234-abcd1234efgh" = {
+    name      = "assistant_api_db"
+    keyspaces = ["assistant_api"]
+    regions   = ["us-east1"]
+    endpoint  = "https://12345678-abcd-efgh-1234-abcd1234efgh-us-east1.apps.astra.datastax.com"
+  }
 }
 ```

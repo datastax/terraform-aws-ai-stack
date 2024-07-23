@@ -2,10 +2,10 @@ output "vpc_id" {
   value = try(module.aws_infra[0].vpc_id, null)
 }
 
-output "alb_dns_name" {
-  value = try(module.aws_infra[0].alb_dns_name, null)
+output "alb_dns_names" {
+  value = try(module.aws_infra[0].alb_dns_names, null)
 }
 
-output "db_ids" {
-  value = zipmap(concat(module.assistants[*].db_id, values(module.vector_dbs)[*].db_id), concat(module.assistants[*].db_name, values(module.vector_dbs)[*].db_name))
+output "astra_vector_dbs" {
+  value = zipmap(concat(module.assistants[*].db_id, values(module.vector_dbs)[*].db_id), concat(module.assistants[*].db_info, values(module.vector_dbs)[*].db_info))
 }

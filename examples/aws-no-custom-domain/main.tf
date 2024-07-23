@@ -7,7 +7,7 @@ provider "aws" {
 }
 
 module "datastax-ai-stack-aws" {
-  source = "../../modules/aws"
+  source = "./../.."
 
   domain_config = {
     auto_route53_setup = false

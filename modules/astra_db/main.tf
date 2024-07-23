@@ -39,6 +39,11 @@ output "db_id" {
   value = astra_database.astra_vector_db.id
 }
 
-output "db_name" {
-  value = var.config.name
+output "db_info" {
+  value = {
+    name = var.config.name
+    regions = local.regions
+    keyspaces = local.keyspaces
+    endpoint = "https://${astra_database.astra_vector_db.id}-${tolist(local.regions)[0]}.apps.astra.datastax.com"
+  }
 }

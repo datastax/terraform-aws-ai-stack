@@ -34,8 +34,8 @@ output "db_id" {
   value = module.assistants_api_db.db_id
 }
 
-output "db_name" {
-  value = module.assistants_api_db.db_name
+output "db_info" {
+  value = module.assistants_api_db.db_info
 }
 
 module "ecs_deployment" {
