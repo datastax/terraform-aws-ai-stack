@@ -1,6 +1,6 @@
 data "astra_available_regions" "this" {
   region_type    = "vector"
-  cloud_provider = var.cloud_provider
+  cloud_provider = local.cloud_provider
   only_enabled   = true
 }
 
