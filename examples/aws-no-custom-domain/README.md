@@ -54,11 +54,11 @@ The token must have the sufficient perms to manage DBs, as shown in the steps be
 
 - ✅ `2.2.a` Connect to [https://astra.datastax.com](https://astra.datastax.com)
 
-![../../assets/astra/login.png](../../assets/astra/login.png)
+![https://raw.githubusercontent.com/datastax/terraform-astra-ai-stack/main/assets/astra/login.png](https://raw.githubusercontent.com/datastax/terraform-astra-ai-stack/main/assets/astra/login.png)
 
 - ✅ `2.2.b` Navigate to token and generate a token with `Organization Administrator` permissions and copy the token starting by `AstraCS:...`
 
-![../../assets/astra/token.png](../../assets/astra/token.png)
+![https://raw.githubusercontent.com/datastax/terraform-astra-ai-stack/main/assets/astra/token.png](https://raw.githubusercontent.com/datastax/terraform-astra-ai-stack/main/assets/astra/token.png)
 
 Keep the token secure, as you won't be able to access it again!
 
@@ -75,11 +75,11 @@ Below is a short guide on how to obtain them, but you can find much more detail 
 
 - ✅ `2.3.c` - For this user create a pair of keys wih `access_key` and `secret_key` as follows:
 
-![../../assets/aws/keys-1.png](../../assets/aws/keys-1.png)
+![https://raw.githubusercontent.com/datastax/terraform-astra-ai-stack/main/assets/aws/keys-1.png](https://raw.githubusercontent.com/datastax/terraform-astra-ai-stack/main/assets/aws/keys-1.png)
 
 - ✅ `2.3.d` - Setup the access for an application outside
 
-![../../assets/aws/keys-2.png](../../assets/aws/keys-2.png)
+![https://raw.githubusercontent.com/datastax/terraform-astra-ai-stack/main/assets/aws/keys-2.png](https://raw.githubusercontent.com/datastax/terraform-astra-ai-stack/main/assets/aws/keys-2.png)
 
 Again, keep these secure!
 
