@@ -1,4 +1,4 @@
-## Datastax AI stack (AWS) with a custom domain
+## DataStax AI stack (AWS) with a custom domain
 
 ## Table of contents
 
@@ -12,12 +12,12 @@
 
 ### 1.1 - About this module
 
-Terraform module which helps you quickly deploy an opinionated AI/RAG stack to your cloud provider of choice, provided by Datastax.
+Terraform module which helps you quickly deploy an opinionated AI/RAG stack to your cloud provider of choice, provided by DataStax.
 
 It offers multiple easy-to-deploy components, including:
  - Langflow
  - Astra Assistants API
- - Vector databases
+ - Astra Vector Databases
 
 ### 1.2 - About this example
 
@@ -49,7 +49,7 @@ terraform -v
 
 ### 2.2 - Astra token w/ sufficient perms
 
-Additionally, you'll need a Datastax AstraDB token to enable creation and management of any vector databases.
+Additionally, you'll need a DataStax AstraDB token to enable creation and management of any vector databases.
 
 The token must have the sufficient perms to manage DBs, as shown in the steps below.
 

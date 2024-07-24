@@ -1,11 +1,15 @@
-# Datastax AI stack (AWS)
+# DataStax AI stack (AWS)
 
-Terraform module which helps you quickly deploy an opinionated AI/RAG stack to AWS, provided by Datastax.
+Terraform module which helps you quickly deploy an opinionated AI/RAG stack to AWS, provided by DataStax.
 
 It offers multiple easy-to-deploy components, including:
  - Langflow
  - Astra Assistants API
- - Vector databases
+ - Astra Vector Databases
+
+Links:
+ - Root git repo: https://github.com/datastax/terraform-datastax-ai-stack
+ - Module registry: https://registry.terraform.io/modules/datastax/ai-stack/aws/latest
 
 ## Prerequisites
 
@@ -24,7 +28,8 @@ have to manually be provided.
 
 ```hcl
 module "datastax-ai-stack-aws" {
-  source = "datastax/ai-stack/astra//modules/aws"
+  source  = "datastax/ai-stack/aws"
+  version = "~> 1.0"
 
   domain_config = {
     auto_route53_setup = true
